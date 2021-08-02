@@ -2,6 +2,12 @@ const graphql = require('graphql')
 
 const { GraphQLObjectType, GraphQLString, GraphQLSchema } = graphql
 
+const books = [
+    {id: "1", name:"book 1", genre: "horror"},
+    {id: "2", name:"book 2", genre: "action"},
+    {id: "3", name:"book 3", genre: "history"},
+]
+
 const BookType = new GraphQLObjectType({
     name: 'Book',
     fields: () => ({
@@ -18,7 +24,8 @@ const RootQuery = new GraphQLObjectType({
             type: BookType,
             args: { id: { type: GraphQLString } },
             resolve(parent, args) {
-                // code to get data from db
+                const result =  books.filter(book => book.id === args.id)
+                return result.length > 0 ? result[0] : null       
             }
         }
     }
