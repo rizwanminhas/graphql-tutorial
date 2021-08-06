@@ -17,6 +17,18 @@ A simple GraphQL app in NodeJS for learning purposes.
         }
     }
     ```
+    
+    or
+
+    ```json
+    mutation {
+        addAuthor(name: "rizwan", age: 100) {
+            id
+            name
+            age
+        }
+    }
+    ```
 
 # Random Notes
 1. For `BookType` and `AuthorType` the `fields` is defined using a *function* instead of an *object*. The reason is we want to lazy evaluate the fields otherwise we will have errors about undefined fields e.g. if I had used *object* and the I would have gotten an error about missing `AuthType` (because `BookType` depends on `AuthType` but `AuthType` is declared after `BookType`).
