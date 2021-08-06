@@ -6,7 +6,7 @@ A simple GraphQL app in NodeJS for learning purposes.
 2. execute `node app.js`
 3. open `http://localhost:3000/graphql` in a browser. (This is available because in `app.js` I enabled `graphiql`)
 4. make a graphql query like 
-    ```json
+    ```
     {
         book(id: 2) {
             name
@@ -20,7 +20,7 @@ A simple GraphQL app in NodeJS for learning purposes.
     
     or
 
-    ```json
+    ```
     mutation {
         addAuthor(name: "rizwan", age: 100) {
             id
