@@ -1,5 +1,6 @@
 import { gql } from 'apollo-boost'
 import { graphql } from 'react-apollo'
+import * as compose from 'lodash.flowright';
 import React, { useState } from 'react'
 
 const getAuthorsQuery = gql`
@@ -10,14 +11,25 @@ const getAuthorsQuery = gql`
         }
     }
 `
+
+const addBookMutation = gql`
+    mutation($name: String!, $genre: String!, $authorId: ID!) {
+        addBook(name: $name, genre: $genre, authorId: $authorId) {
+            id
+            name
+        }
+    }
+
+`
+
 function AddBook(props) {
     const [book, setBook] = useState({ name: "", genre: "", authorId: "" });
 
     function displayAuthors() {
-        if (props.data.loading)
+        if (props.getAuthorsQuery.loading)
             return (<option disabled>loading...</option>)
         else
-            return props.data.authors.map(author => {
+            return props.getAuthorsQuery.authors.map(author => {
                 return (
                     <option key={author.id} value={author.id}>{author.name}</option>
                 )
@@ -26,7 +38,13 @@ function AddBook(props) {
 
     function handleSubmit(e) {
         e.preventDefault()
-        console.log(book)
+        props.addBookMutation({
+            variables: {
+                name: book.name,
+                genre: book.genre,
+                authorId: book.authorId
+            }
+        })
     }
 
     return (
@@ -53,4 +71,7 @@ function AddBook(props) {
     )
 }
 
-export default graphql(getAuthorsQuery)(AddBook)
+export default compose(
+    graphql(getAuthorsQuery, { name: "getAuthorsQuery" }),
+    graphql(addBookMutation, { name: "addBookMutation" })
+)(AddBook)
