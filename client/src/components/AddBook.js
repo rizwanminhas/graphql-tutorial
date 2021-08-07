@@ -2,6 +2,7 @@ import { gql } from 'apollo-boost'
 import { graphql } from 'react-apollo'
 import * as compose from 'lodash.flowright';
 import React, { useState } from 'react'
+import { getBooksQuery } from './BookList';
 
 const getAuthorsQuery = gql`
     {
@@ -43,7 +44,8 @@ function AddBook(props) {
                 name: book.name,
                 genre: book.genre,
                 authorId: book.authorId
-            }
+            },
+            refetchQueries: [{ query: getBooksQuery }]
         })
     }
 

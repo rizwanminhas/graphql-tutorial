@@ -1,7 +1,7 @@
 import { gql } from 'apollo-boost'
 import { graphql } from 'react-apollo'
 
-const getBooksQuery = gql`
+export const getBooksQuery = gql`
     {
         books {
             name
