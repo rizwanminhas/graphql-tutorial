@@ -3,19 +3,19 @@ const graphql = require('graphql')
 const { GraphQLObjectType, GraphQLString, GraphQLSchema, GraphQLID, GraphQLInt, GraphQLList, GraphQLNonNull } = graphql
 
 const books = [
-    { id: "1", name: "book 1", genre: "horror", authorId: "2" },
-    { id: "2", name: "book 2", genre: "action", authorId: "1" },
-    { id: "3", name: "book 3", genre: "history", authorId: "3" },
-    { id: "4", name: "book 4", genre: "fiction", authorId: "2" },
-    { id: "5", name: "book 5", genre: "romance", authorId: "2" },
-    { id: "6", name: "book 6", genre: "comic", authorId: "3" },
+    { id: 1, name: "book 1", genre: "horror", authorId: 2 },
+    { id: 2, name: "book 2", genre: "action", authorId: 1 },
+    { id: 3, name: "book 3", genre: "history", authorId: 3 },
+    { id: 4, name: "book 4", genre: "fiction", authorId: 2 },
+    { id: 5, name: "book 5", genre: "romance", authorId: 2 },
+    { id: 6, name: "book 6", genre: "comic", authorId: 3 },
 
 ]
 
 const authors = [
-    { id: "1", name: "author 1", age: 30 },
-    { id: "2", name: "author 2", age: 40 },
-    { id: "3", name: "author 3", age: 50 },
+    { id: 1, name: "author 1", age: 30 },
+    { id: 2, name: "author 2", age: 40 },
+    { id: 3, name: "author 3", age: 50 },
 ]
 
 const BookType = new GraphQLObjectType({
@@ -56,14 +56,14 @@ const RootQuery = new GraphQLObjectType({
             type: BookType,
             args: { id: { type: GraphQLID } },
             resolve(parent, args) {
-                return books.find(book => book.id === args.id)
+                return books.find(book => book.id === parseInt(args.id))
             }
         },
         author: {
             type: AuthorType,
             args: { id: { type: GraphQLID } },
             resolve(parent, args) {
-                return authors.find(author => author.id === args.id)
+                return authors.find(author => author.id === parseInt(args.id))
             }
         },
         books: {
@@ -106,7 +106,7 @@ const Mutation = new GraphQLObjectType({
             },
             resolve(parent, args) {
                 let id = parseInt(books[books.length - 1].id) + 1
-                let book = { id, name: args.name, genre: args.genre, authorId: args.authorId }
+                let book = { id, name: args.name, genre: args.genre, authorId: parseInt(args.authorId) }
                 books.push(book)
                 return book
             }

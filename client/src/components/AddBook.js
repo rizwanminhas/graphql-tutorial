@@ -24,7 +24,7 @@ const addBookMutation = gql`
 `
 
 function AddBook(props) {
-    const [book, setBook] = useState({ name: "", genre: "", authorId: "" });
+    const [book, setBook] = useState({ name: "", genre: "", authorId: "" })
 
     function displayAuthors() {
         if (props.getAuthorsQuery.loading)
